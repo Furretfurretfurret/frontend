@@ -16,13 +16,14 @@
       </v-sheet>
       <v-divider />
       <v-list>
+        <v-list-item prepend-icon="mdi-home" title="Home" v-bind="props" @click="goHome()" link></v-list-item>
         <v-list-group v-for="folder in folders" :key="folder.name" :value="folder.name">
           <template v-slot:activator="{ props }">
             <v-list-item
               v-bind="props"
             >{{folder.name}}</v-list-item>
           </template> 
-          <v-list-item v-for="(song, i) in folder.songs" :key="i" :value="song" active-color="primary" @click="setSongId(song)" link>
+          <v-list-item v-for="(song, i) in folder.songs" :key="i" @click="setSongId(song)" link>
               <v-list-item-title v-text="song"></v-list-item-title>
           </v-list-item>
         </v-list-group>
@@ -121,6 +122,12 @@ export default {
     setSongId: function(sid) {
       this.songid = { songid: sid }
       window.location.href = '#/song'
+      this.title = sid
+    },
+    goHome() {
+      this.songid = { songid: null }
+      window.location.href = '#/'
+      this.title = "Home"
     },
   },
 }
