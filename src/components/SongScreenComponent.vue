@@ -1,15 +1,15 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <p>
-      I did the thing
+      The song is called {{songid}}
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeComponent',
+  name: 'SongScreenComponent',
+  props: ['songid'],
 }
 </script>
 
