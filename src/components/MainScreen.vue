@@ -22,7 +22,7 @@
               v-bind="props"
             >{{folder.name}}</v-list-item>
           </template> 
-          <v-list-item v-for="(song, i) in folder.songs" :key="i" link>
+          <v-list-item v-for="(song, i) in folder.songs" :key="i" :value="song" active-color="primary" link>
               <v-list-item-title v-text="song"></v-list-item-title>
           </v-list-item>
         </v-list-group>
