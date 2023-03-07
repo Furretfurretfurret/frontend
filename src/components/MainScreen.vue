@@ -22,7 +22,7 @@
               v-bind="props"
             >{{folder.name}}</v-list-item>
           </template> 
-          <v-list-item v-for="(song, i) in folder.songs" :key="i" :value="song" active-color="primary" link>
+          <v-list-item v-for="(song, i) in folder.songs" :key="i" :value="song" active-color="primary" @click="setSongId(song)" link>
               <v-list-item-title v-text="song"></v-list-item-title>
           </v-list-item>
         </v-list-group>
@@ -54,7 +54,7 @@
 
     <v-main>
       <!--  -->
-      <HelloWorld />
+      <component :is="currentView" v-bind="songid" />
     </v-main>
   </v-app>
 </template>
@@ -66,15 +66,28 @@
 </style>
 
 <script>
-import HelloWorld from './HelloWorld.vue'
+import HelloWorld from './HelloWorld.vue';
+import HomeComponent from './HomeComponent.vue';
+import SongScreenComponent from './SongScreenComponent.vue';
+
+const routes = {
+  '/': HomeComponent,
+  '/helloworld': HelloWorld,
+  '/song': SongScreenComponent,
+}
+
 
 export default {
   components: {
-    HelloWorld
+    HelloWorld,
+    HomeComponent,
+    SongScreenComponent,
   },
   data: () => ({ 
+    currentPath: window.location.hash,
     drawer: null, 
     title: "Home",
+    songid: null,
     folders: [
       { 
         name: 'Favorites',
@@ -94,5 +107,21 @@ export default {
       },
     ],
   }),
+  computed: {
+    currentView() {
+      return routes[this.currentPath.slice(1) || '/']
+    }
+  },
+  mounted() {
+    window.addEventListener('hashchange', () => {
+      this.currentPath = window.location.hash
+		})
+  },
+  methods: {
+    setSongId: function(sid) {
+      this.songid = { songid: sid }
+      window.location.href = '#/song'
+    },
+  },
 }
 </script>
