@@ -14,6 +14,7 @@
           ></v-list-item>
         </v-list>
       </v-sheet>
+      <v-divider />
       <v-list>
         <v-list-group v-for="folder in folders" :key="folder.name" :value="folder.name">
           <template v-slot:activator="{ props }">
@@ -21,11 +22,22 @@
               v-bind="props"
             >{{folder.name}}</v-list-item>
           </template> 
-          <v-list-item v-for="(song, i) in folder.songs" :key="i" link>
+          <v-list-item v-for="(song, i) in folder.songs" :key="i" :value="song" active-color="primary" link>
               <v-list-item-title v-text="song"></v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>
+      <template v-slot:append>
+        <v-divider />
+        <div class="pa-2">
+          <v-btn block
+          color="#BB86FC"
+          prepend-icon="mdi-cloud-upload"
+          >
+            Upload
+          </v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar
