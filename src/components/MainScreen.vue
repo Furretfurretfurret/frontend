@@ -34,9 +34,17 @@
           <v-btn block
           color="#BB86FC"
           prepend-icon="mdi-cloud-upload"
+          :loading="isSelecting" 
+          @click="handleFileImport"
           >
             Upload
           </v-btn>
+          <input 
+            ref="uploader" 
+            class="d-none" 
+            type="file" 
+            @change="onFileChanged"
+          >
         </div>
       </template>
     </v-navigation-drawer>
@@ -48,7 +56,7 @@
 
       <v-toolbar-title>{{title}}</v-toolbar-title>
       
-      <v-btn icon>
+      <v-btn icon @click="swapPage('settings')">
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
@@ -70,11 +78,13 @@
 import HelloWorld from './HelloWorld.vue';
 import HomeComponent from './HomeComponent.vue';
 import SongScreenComponent from './SongScreenComponent.vue';
+import Settings from './SettingsPage.vue'
 
 const routes = {
   '/': HomeComponent,
   '/helloworld': HelloWorld,
   '/song': SongScreenComponent,
+  '/settings': Settings,
 }
 
 
@@ -83,6 +93,7 @@ export default {
     HelloWorld,
     HomeComponent,
     SongScreenComponent,
+    Settings,
   },
   data: () => ({ 
     currentPath: window.location.hash,
@@ -107,6 +118,8 @@ export default {
         songs: ['Rex Incognito', 'Swirls of the Stream', 'A Memorable Fancy', 'Moon Like Smile']
       },
     ],
+    isSelecting: false,
+    selectedFile: null,
   }),
   computed: {
     currentView() {
@@ -119,6 +132,11 @@ export default {
 		})
   },
   methods: {
+    swapPage: function(pagename) {
+      this.songid = { songid: null }
+      window.location.href = '#/' + pagename
+      this.title = "Settings"
+    },
     setSongId: function(sid) {
       this.songid = { songid: sid }
       window.location.href = '#/song'
@@ -128,6 +146,17 @@ export default {
       this.songid = { songid: null }
       window.location.href = '#/'
       this.title = "Home"
+    },
+    handleFileImport() {
+      this.isSelecting = true;
+
+      // After obtaining the focus when closing the FilePicker, return the button state to normal
+      window.addEventListener('focus', () => {
+          this.isSelecting = false
+      }, { once: true });
+      
+      // Trigger click on the FileInput
+      this.$refs.uploader.click();
     },
   },
 }
