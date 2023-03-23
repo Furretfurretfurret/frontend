@@ -102,10 +102,6 @@ export default {
     songid: null,
     folders: [
       { 
-        name: 'Recently uploaded',
-        songs: []
-      },
-      { 
         name: 'Favorites',
         songs: ['Donkey Serenade', 'Never Gonna Give You Up', 'We Are Number One']  
       },
@@ -161,10 +157,6 @@ export default {
       
       // Trigger click on the FileInput
       this.$refs.uploader.click();
-    },
-    onFileChanged(e) {
-        this.selectedFile = e.target.files[0];
-        this.folders[0].songs.push(this.selectedFile.name)
     },
   },
 }
