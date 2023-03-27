@@ -23,8 +23,8 @@
               v-bind="props"
             >{{folder.name}}</v-list-item>
           </template> 
-          <v-list-item v-for="(song, i) in folder.songs" :key="i" @click="setSongId(song)" link>
-              <v-list-item-title v-text="song"></v-list-item-title>
+          <v-list-item v-for="(song, i) in folder.songs" :key="i" @click="setSongId(song[0])" link>
+              <v-list-item-title v-text="song[0]"></v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list>
@@ -103,19 +103,15 @@ export default {
     folders: [
       { 
         name: 'Favorites',
-        songs: ['Donkey Serenade', 'Never Gonna Give You Up', 'We Are Number One']  
+        songs: [['So This Is Love', 'Cinderella-SO-THIS-IS-LOVE-01.gif'], ['Dreidel', 'Dreidel-sheet-music-with-chords.jpg']]
       },
       { 
         name: 'Bangers',
-        songs: ['Shooting Stars', 'Into the Night', 'Take On Me', 'Roundabout', 'Megalovania']
-      },
-      { 
-        name: 'Classical',
-        songs: ['Moonlight Sonata', 'Turkish March', 'Croatian Rhapsody']
+        songs: [['Glimpse of Us', 'Glimpse_of_us_jpg-1.jpg']]
       },
       { 
         name: 'Akash\'s Genshin Stash',
-        songs: ['Rex Incognito', 'Swirls of the Stream', 'A Memorable Fancy', 'Moon Like Smile']
+        songs: [['Albedo Cutscene', 'Albedo.jpg'], ['Dragonspine', 'dragonspine.jpg'], ['Eternal Oasis', 'Genshin.jpg']]
       },
     ],
     isSelecting: false,
